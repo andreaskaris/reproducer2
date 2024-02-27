@@ -37,7 +37,7 @@ ifndef TAG
 endif
 
 .PHONY: check-env-image
-check-env-image
+check-env-image:
 ifndef IMAGE
 	$(error IMAGE is undefined (e.g. quay.io/akaris/fedora:reproducer2))
 endif
