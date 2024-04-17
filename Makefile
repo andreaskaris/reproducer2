@@ -20,7 +20,7 @@ deploy: check-env-image
 	oc adm policy add-scc-to-user privileged -z default
 	oc adm policy add-role-to-user cluster-reader -z default
 	bash privileged.sh reproducer
-	oc create configmap --from-file=blue.sh=blue.sh --from-file=red.sh=red.sh entrypoint
+	oc create configmap --from-file=blue.sh=blue.sh --from-file=red.sh=red.sh entrypoint --from-file=send-sip.sh=send-sip.sh
 	cat blue.yaml | sed 's#IMAGE#$(IMAGE)#' | oc apply -f -
 	cat red.yaml | sed 's#IMAGE#$(IMAGE)#' | oc apply -f -
 

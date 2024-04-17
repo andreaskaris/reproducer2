@@ -16,6 +16,7 @@ spec:
       labels:
         app: red
     spec:
+      nodeName: akaris-worker-1.karmalabs.com
       containers:
       - command:
         - "/bin/bash"
