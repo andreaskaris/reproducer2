@@ -14,6 +14,17 @@ load: check-env-tag check-env-server
 .PHONY: build-and-upload-and-load
 build-and-upload-and-load: build upload load
 
+.PHONY: build-image
+build-image: check-env-image
+	podman build -t $(IMAGE) .
+
+.PHONY: push-image
+push-image: check-env-image
+	podman push $(IMAGE)
+
+.PHONY: build-and-push-image
+build-and-push-image: build-image push-image
+
 .PHONY: deploy
 deploy: check-env-image
 	oc new-project reproducer || oc project reproducer
@@ -38,7 +49,7 @@ endif
 .PHONY: check-env-image
 check-env-image:
 ifndef IMAGE
-	$(error IMAGE is undefined (e.g. quay.io/akaris/fedora:reproducer2))
+	$(error IMAGE is undefined (e.g. quay.io/akaris/fedora:sip))
 endif
 
 .PHONY: check-env-server

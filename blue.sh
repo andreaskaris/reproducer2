@@ -15,6 +15,7 @@ ip a a dev tap0 2000::1/64
 
 FEATURES="tcp-segmentation-offload generic-segmentation-offload generic-receive-offload large-receive-offload tx-checksumming scatter-gather rx-vlan-offload highdma rx-vlan-filter tx-gre-segmentation tx-gre-csum-segmentation tx-ipxip4-segmentation tx-ipxip6-segmentation tx-udp_tnl-segmentation tx-udp_tnl-csum-segmentation tx-esp-segmentation tx-udp-segmentation esp-hw-offload esp-tx-csum-hw-offload tx-sctp-segmentation tx-gso-list rx-checksumming receive-hashing tx-gso-partial rx-all rx-checksumming receive-hashing tx-gso-partial rx-all tx-vlan-stag-hw-insert tx rx rx-udp-gro-forwarding rx-vlan-stag-hw-parse rx-gro-hw scatter-gather"
 INTERFACES=$(ip --json link | jq -r '.[].ifname')
+SWITCH_ON_OFF="off"
 for interface in ${INTERFACES}; do
   for feature in ${FEATURES}; do
     ethtool -K "${interface}" "${feature}" ${SWITCH_ON_OFF}
