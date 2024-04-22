@@ -2,6 +2,7 @@ BLUE_NODE ?= akaris-worker-0.karmalabs.com
 GREEN_NODE ?= akaris-worker-0.karmalabs.com
 RED_NODE ?= akaris-worker-1.karmalabs.com
 SENDER_MTU ?= 1280
+IP_AF ?= IPv6
 
 .PHONY: build
 build: check-env-tag
@@ -43,9 +44,9 @@ deploy: check-env-image
 		--from-file=red.sh=red.sh \
 		--from-file=send-sip.sh=send-sip.sh \
 		entrypoint
-	cat green.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(GREEN_NODE)#' | sed 's#SENDER_MTU_VALUE#$(SENDER_MTU)#' | oc apply -f -
-	cat blue.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(BLUE_NODE)#' | sed 's#SENDER_MTU_VALUE#$(SENDER_MTU)#' | oc apply -f -
-	cat red.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(RED_NODE)#' | oc apply -f -
+	cat green.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(GREEN_NODE)#' | sed 's#SENDER_MTU_VALUE#$(SENDER_MTU)#' | sed 's#IP_AF_VALUE#$(IP_AF)#' | oc apply -f -
+	cat blue.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(BLUE_NODE)#' | sed 's#SENDER_MTU_VALUE#$(SENDER_MTU)#' | sed 's#IP_AF_VALUE#$(IP_AF)#' | oc apply -f -
+	cat red.yaml | sed 's#IMAGE#$(IMAGE)#' | sed 's#NODE#$(RED_NODE)#' | sed 's#IP_AF_VALUE#$(IP_AF)#' | oc apply -f -
 
 .PHONY: undeploy
 undeploy:

@@ -9,11 +9,17 @@ source "${DIR}/common.sh"
 sleep 30
 
 get_ips
+IP_AF="${IP_AF:IPv6}"
 
 ip link add tap1 type gretap local "${RED_IP}" remote "${BLUE_IP}" ikey 0.0.0.1 okey 0.0.0.1
 ip link set dev tap1 up
-ip a a dev tap1 2001::1/64
-ip r a 2000::/64 via 2001::2
+if [ "${IP_AF}" == "IPv4" ]; then
+  ip a a dev tap1 192.168.124.1/24
+  ip r a 192.168.123.0/24 via 192.168.124.2
+else
+  ip a a dev tap1 2001::1/64
+  ip r a 2000::/64 via 2001::2
+fi
 
 disable_offloading
 

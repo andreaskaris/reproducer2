@@ -36,6 +36,9 @@ spec:
             - SYS_ADMIN
             - NET_BIND_SERVICE
           privileged: true
+        env:
+        - name: IP_AF
+          value: "IP_AF_VALUE"
       volumes:
       - name: entrypoint
         configMap:

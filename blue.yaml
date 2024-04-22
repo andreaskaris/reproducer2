@@ -39,6 +39,8 @@ spec:
         env:
         - name: SENDER_MTU
           value: "SENDER_MTU_VALUE"
+        - name: IP_AF
+          value: "IP_AF_VALUE"
       volumes:
       - name: entrypoint
         configMap:
