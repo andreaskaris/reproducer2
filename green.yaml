@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: blue
-  name: blue
+    app: green
+  name: green
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blue
+      app: green
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: blue
+        app: green
     spec:
       nodeName: NODE
       containers:
       - command:
         - "/bin/bash"
         - "-x"
-        - "/entrypoint/blue.sh"
+        - "/entrypoint/green.sh"
         image: IMAGE
         imagePullPolicy: IfNotPresent
         name: reproducer

@@ -15,3 +15,7 @@ You can tear down the environment with:
 ```
 make undeploy
 ```
+
+# Traffic between pods
+
+`green` is the sender, `blue` forwards traffic and `red` is the destination of traffic.

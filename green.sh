@@ -10,17 +10,17 @@ sleep 30
 
 get_ips
 
-ip link add tap0 type gretap local "${BLUE_IP}" remote "${GREEN_IP}" ikey 0.0.0.1 okey 0.0.0.1
+ip link add tap0 type gretap local "${GREEN_IP}" remote "${BLUE_IP}" ikey 0.0.0.1 okey 0.0.0.1
 ip link set dev tap0 up
+ip a a dev tap0 2000::1/64
 ip link set dev tap0 mtu ${SENDER_MTU:-1280}
-ip a a dev tap0 2000::2/64
-
-ip link add tap1 type gretap local "${BLUE_IP}" remote "${RED_IP}" ikey 0.0.0.1 okey 0.0.0.1
-ip link set dev tap1 up
-ip a a dev tap1 2001::2/64
-
-echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+ip r a 2001::/64 via 2000::2
 
 disable_offloading
+
+while true; do
+    bash /entrypoint/send-sip.sh 2001::1 5060 long
+    sleep 5
+done
 
 sleep infinity
